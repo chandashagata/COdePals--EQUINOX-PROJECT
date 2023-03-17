@@ -1,0 +1,19 @@
+from tkinter import*
+class CourseProject:
+    def __init__(self,root):
+        self.root=root
+        self.root.title("STUDENT RESULT MANAGEMENT SYSTEM")
+        self.root.geometry("1350x700+0+0")
+        self.root.config(bg="#FFFF72")
+
+
+
+
+
+
+
+
+if __name__=="__main__":
+    root=Tk()
+    obj=CourseProject(root)
+    root.mainloop()
