@@ -1,0 +1,250 @@
+from tkinter import*
+from tkinter import ttk,messagebox
+import sqlite3
+class StudentProject:
+    def __init__(self,root):
+        self.root=root
+        self.root.title("STUDENT RESULT MANAGEMENT SYSTEM")
+        self.root.geometry("1350x700+0+0")
+        self.root.config(bg="light grey")
+        self.root.focus_force()
+        
+        #_______Title______
+        title=Label(self.root,text="Manage Student Details",padx=10,compound="left",font=("groudy old style",20,"bold"),bg="#033054",fg="white").place(x=0,y=0,width=1480,height=35)
+        
+        #____Var_____
+        self.var_roll=StringVar()
+        self.var_gender=StringVar()
+        self.var_email=StringVar()
+        self.var_name=StringVar()
+        self.var_dob=StringVar()
+        self.var_contact=StringVar()
+        self.var_course=StringVar()
+        self.var_a_date=StringVar()
+        self.var_state=StringVar()
+        self.var_city=StringVar()
+        self.var_pin=StringVar()
+
+        
+        #_______widgets______
+        #=======column1=======
+        lbl_rollno=Label(self.root,text="Roll No.",font=("Comic Sans",20,""),bg="light grey").place(x=20,y=70)
+        lbl_name=Label(self.root,text="Name",font=("Comic Sans",20,""),bg="light grey").place(x=20,y=120)
+        lbl_email=Label(self.root,text="Email",font=("Comic Sans",20,""),bg="light grey").place(x=20,y=170)
+        lbl_gender=Label(self.root,text="Gender",font=("Comic Sans",20,""),bg="light grey").place(x=20,y=220)
+        lbl_state=Label(self.root,text="State",font=("Comic Sans",20,""),bg="light grey").place(x=20,y=260)
+        txt_state=Entry(self.root,textvariable=self.var_state,font=("Comic Sans",20,""),bg="light yellow").place(x=150,y=220,width=100)
+
+        lbl_city=Label(self.root,text="City",font=("Comic Sans",20,""),bg="light grey").place(x=320,y=260)
+        txt_city=Entry(self.root,textvariable=self.var_city,font=("Comic Sans",20,""),bg="light yellow").place(x=380,y=220,width=100)
+
+        lbl_pin=Label(self.root,text="Pin",font=("Comic Sans",20,""),bg="light grey").place(x=500,y=260)
+        txt_pin=Entry(self.root,textvariable=self.var_pin,font=("Comic Sans",20,""),bg="light yellow").place(x=560,y=220,width=100)
+
+
+
+        lbl_address=Label(self.root,text="Address",font=("Comic Sans",20,""),bg="light grey").place(x=20,y=300)
+
+
+        
+
+
+        #======Entryfields=======
+        self.txt_roll=Entry(self.root,textvariable=self.var_roll,font=("Comic Sans",20,""),bg="light yellow")
+        self.txt_roll.place(x=220,y=70,width=130)
+        txt_name=Entry(self.root,textvariable=self.var_name,font=("Comic Sans",20,""),bg="light yellow").place(x=220,y=120,width=130)
+        txt_email=Entry(self.root,textvariable=self.var_email,font=("Comic Sans",20,""),bg="light yellow").place(x=220,y=180,width=130)
+        txt_gender=ttk.Combobox(self.root,textvariable=self.var_gender,values=("male","female","other"),font=("Comic Sans",20,""),state="readonly",justify=CENTER).place(x=220,y=220,width=130)
+
+
+        #==============column2=========
+        lbl_dob=Label(self.root,text="DOB.",font=("Comic Sans",20,""),bg="light grey").place(x=360,y=70)
+        lbl_contact=Label(self.root,text="Contact",font=("Comic Sans",20,""),bg="light grey").place(x=360,y=120)
+        lbl_admission=Label(self.root,text="Admission",font=("Comic Sans",20,""),bg="light grey").place(x=360,y=170)
+        lbl_course=Label(self.root,text="Course",font=("Comic Sans",20,""),bg="light grey").place(x=360,y=220)
+        
+
+
+        #======Entryfields=======
+        self.course_list=["Empty"]
+        #====functioncall
+        txt_dob=Entry(self.root,textvariable=self.var_dob,font=("Comic Sans",20,""),bg="light yellow")
+        txt_dob.place(x=570,y=70,width=130)
+        txt_contact=Entry(self.root,textvariable=self.var_contact,font=("Comic Sans",20,""),bg="light yellow").place(x=570,y=120,width=130)
+        txt_admission=Entry(self.root,textvariable=self.var_admission,font=("Comic Sans",20,""),bg="light yellow").place(x=570,y=180,width=130)
+        txt_course=ttk.Combobox(self.root,textvariable=self.var_course,values=(),font=("Comic Sans",20,""),state="readonly",justify=CENTER).place(x=220,y=220,width=130)
+
+
+        #=======TextAddress========
+        self.txt_address=Text(self.root,font=("Comic Sans",20,""),bg="light yellow")
+        self.txt_address.place(x=300,y=0,width=355,height=100)
+        
+        #____Buttons______
+        self.btn_add=Button(self.root,text="Add",font=("Callibri",15,"bold"),bg="#2193f3",fg="white",cursor="hand2",command=self.add)
+        self.btn_add.place(x=150,y=450,width=110,height=40)
+        self.btn_update=Button(self.root,text="Update",font=("Callibri",15,"bold"),bg="dark green",fg="white",cursor="hand2",command=self.update)
+        self.btn_update.place(x=270,y=450,width=110,height=40)
+        self.btn_delete=Button(self.root,text="Delete",font=("Callibri",15,"bold"),bg="red",fg="white",cursor="hand2",command=self.delete)
+        self.btn_delete.place(x=390,y=450,width=90,height=40)
+        
+        #______Search Panel_______
+        self.var_search=StringVar()
+        lbl_search_roll=Label(self.root,text="Roll No.",font=("goudy old style",20,""),bg="light grey").place(x=600,y=70)
+        txt_search_roll=Entry(self.root,textvariable=self.var_search,font=("Comic Sans",20,""),bg="light yellow").place(x=780,y=70,width=180)
+        btn_search=Button(self.root,text="Search",font=("Callibri",15,"bold"),bg="#03a9f4",fg="white",cursor="hand2",command=self.search).place(x=1000,y=75,width=110,height=28)
+        
+        #_______CONTENT_____
+        self.C_frame=Frame(self.root,bd=2,relief=SUNKEN)
+        self.C_frame.place(x=750,y=130,width=490,height=370)
+        
+        self.CourseTable=ttk.Treeview(self.C_frame,columns=("cid","Name","Credits","Duration","Description"))
+        self.CourseTable.heading("roll",text="Course ID")
+        self.CourseTable.heading("Name",text="Name")
+        self.CourseTable.heading("email",text="Credits")
+        self.CourseTable.heading("gender",text="Duration")
+        self.CourseTable.heading("dob",text="Description")
+        self.CourseTable.heading("contact",width=150)
+        self.CourseTable.heading("admission",width=150)
+        self.CourseTable.heading("course",width=150)
+        self.CourseTable.heading("state",width=150)
+        self.CourseTable.heading("city",width=150)
+        self.CourseTable.heading("pin",width=150)
+        self.CourseTable.heading("address",width=150)
+
+
+
+
+        self.CourseTable["show"]='headings'
+        self.CourseTable.column("roll",width=70)
+        self.CourseTable.column("Name",width=100)
+        self.CourseTable.column("email",width=100)
+        self.CourseTable.column("gender",width=100)
+        self.CourseTable.column("dob",width=150)
+        self.CourseTable.column("contact",width=150)
+        self.CourseTable.column("admission",width=150)
+        self.CourseTable.column("course",width=150)
+        self.CourseTable.column("state",width=150)
+        self.CourseTable.column("city",width=150)
+        self.CourseTable.column("pin",width=150)
+        self.CourseTable.column("address",width=150)
+        self.CourseTable.pack(fill=BOTH,expand=1)
+        self.CourseTable.bind("ButtonRelease-1",self.get_data)
+        self.show()
+#=====================================================================================================
+def delete(self):
+ con=sqlite3.connect(database="rms.db")
+cur=con.cursor()
+try:
+        if self.var_roll.get=="":
+            messagebox.showerror("Error","Course Name should be Required",parent=self.root)
+        else:
+            cur.execute("select * from course where name=?",(self.var_roll.get(),))
+            row=cur.fetchone()
+            if row==None:
+                messagebox.showerror("Error","Select course",parent=self.root)
+            else:
+                op=messagebox.askyesno("Confirm","Do you really want to delete?",parent=self.root)
+                if op==True:
+                    cur.execute("delete from course where name=?",(self.var_roll.get(),))
+                    con.commit()
+                    messagebox.showinfo("Delete","Deleted Successfully",parent=self.root)
+                    self.show()
+except Exception as ex:
+        messagebox.showerror("Error",f"Error due to {str(ex)}")
+
+
+def get_data(self,ev):
+    self.txt_roll.config(State='readonly')
+    self.txt_roll
+    r=self.CourseTable.focus()
+    content=self.CourseTable.item(r)
+    row=content["values"]
+    #print(row)
+    self.var_roll.set(row[1])
+    self.var_credits.set(row[2])
+    self.var_duration.set(row[3])
+    #self.var_description.set(row[4])
+    self.txt_description.delete('1.0',END)
+    self.txt_description.insert(END,row[4])
+
+    
+def add(self):
+    con=sqlite3.connect(database="rms.db")
+    cur=con.cursor()
+    try:
+        if self.var_roll.get=="":
+            messagebox.showerror("Error","Course Name should be Required",parent=self.root)
+        else:
+            cur.execute("select * from course where name=?",(self.var_roll.get(),))
+            row=cur.fetchone()
+            if row!=None:
+                messagebox.showerror("Error","Course Name already exists",parent=self.root)
+            else:
+                cur.execute("insert into course(name,credits,duration,description)values(?,?,?,?)",)
+                self.var_roll.get(),
+                self.var_credits.get()
+                self.var_duration.get(),
+                self.txt_description.get("1.0",END)
+                ()
+                con.commit()
+                messagebox.showinfo("Success","Couse added successfully",parent=self.root)
+                self.show()
+    except Exception as ex:
+        messagebox.showerror("Error",f"Error due to {str(ex)}")
+
+def update(self):
+    con=sqlite3.connect(database="rms.db")
+    cur=con.cursor()
+    try:
+        if self.var_roll.get=="":
+            messagebox.showerror("Error","Course Name should be Required",parent=self.root)
+        else:
+            cur.execute("select * from course where name=?",(self.var_roll.get(),))
+            row=cur.fetchone()
+            if row!=None:
+                messagebox.showerror("Error","Select Course",parent=self.root)
+            else:
+                cur.execute("update course set credits=?,duration=?,description=? where name=?",)
+                self.var_credits.get(),
+                self.var_duration.get(),
+                self.txt_description.get("1.0",END)
+                self.var_roll.get(),
+                ()
+                con.commit()
+                messagebox.showinfo("Success","Course updated successfully",parent=self.root)
+                self.show()
+    except Exception as ex:
+        messagebox.showerror("Error",f"Error due to {str(ex)}")
+
+
+
+def show(self):
+    con=sqlite3.connect(database="rms.db")
+    cur=con.cursor()
+    try:
+        cur.execute("select * from course")
+        rows=cur.fetchall()
+        self.CourseTable.delete(*self.CourseTable.get_children())
+        for row in rows:
+            self.CourseTable.insert('',END,values=row)
+    except Exception as ex:
+        messagebox.showerror("Error",f"Error due to {str(ex)}")
+
+def search(self):
+    con=sqlite3.connect(database="rms.db")
+    cur=con.cursor()
+    try:
+        cur.execute(f"select * from course where name LIKE '%{self.var_search.get()}%'")
+        rows=cur.fetchall()
+        self.CourseTable.delete(*self.CourseTable.get_children())
+        for row in rows:
+            self.CourseTable.insert('',END,values=row)
+    except Exception as ex:
+        messagebox.showerror("Error",f"Error due to {str(ex)}")
+
+
+
+if __name__=="__main__":
+    root=Tk()
+    obj=StudentProject(root)
+    root.mainloop()
