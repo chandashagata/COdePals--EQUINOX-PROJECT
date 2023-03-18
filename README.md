@@ -7,7 +7,7 @@ There is a need of Secured Data management System to be used in Every other inst
 Our Project has been created using Python(to create the GUI-Graphical User Interface) and MySQL( to store vast amount of data).
 This Project helped us learn a lot of concepts of Graphical User Interface and Database Management along with good Team work skills and Coordinating Skills. It was a new experience but an amazing and interesting one. We learned about many new modules, database structures, and Collective Coding together.
 
-Our Project has many different and unique features that would help the users in all tasks, whether its an User Interactive Interface, Security, Vast data storages and many more such features. 
+Our Project has many different and unique features that would help the users in all tasks, whether its an User Interactive Interface, Security, Vast data storages and many more such features. Special Thanks to Celestial Biscuit and founder- Pooja Gera to guide us through, and for organising Equinox. 
 Do take a look at our Project and best wishes from Team COdePals.
 
 
