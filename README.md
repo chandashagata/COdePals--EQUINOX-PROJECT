@@ -1,7 +1,7 @@
 # EQUINOX-PROJECT
 Our Team COdePals has created the Project- Student Result Management Systems. 
 
-We were motivated to create this project as Handling Result, Personal Details, Course Details and many more such data comes as a task for us in our daily lives, being students in college or any Educational Institutions. 
+We were motivated to create this project as Handling Result, Personal Details, Course Details and many more such data, comes as a task for us in our daily lives, being students in college or any Educational Institutions. 
 There is a need of Secured Data management System to be used in Every other institution to avoid thefts, fraud, authentication defects etc.
 
 Our Project has been created using Python(to create the GUI-Graphical User Interface) and MySQL( to store vast amount of data).
