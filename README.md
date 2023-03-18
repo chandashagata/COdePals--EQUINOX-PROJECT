@@ -1,4 +1,4 @@
-# COdePals - EQUINOX-PROJECT
+# COdePals - We Develop and Conquer
 Our Team COdePals has created the Project- Student Result Management Systems. 
 
 We were motivated to create this project as Handling Result, Personal Details, Course Details and many more such data, comes as a task for us in our daily lives, being students in college or any Educational Institutions. 
